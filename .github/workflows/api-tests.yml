@@ -22,6 +22,13 @@ jobs:
       - name: Install Newman
         run: npm install -g newman newman-reporter-htmlextra
 
+      - name: Debug Environment and Files
+        run: |
+          ls -la postman/
+          echo "RAPIDAPI_KEY is set to ${RAPIDAPI_KEY}"
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+
       - name: Run API Tests
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
