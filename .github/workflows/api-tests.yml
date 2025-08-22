@@ -22,16 +22,16 @@ jobs:
       - name: Install Newman
         run: npm install -g newman newman-reporter-htmlextra
 
-    - name: Run API Tests
-  env:
-    RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-  run: |
-    newman run postman/WhatsAppOSINTCollection.json \
-      -e postman/WhatsAppOSINTEnv.json \
-      --env-var "apiKey=${RAPIDAPI_KEY}" \
-      -r htmlextra \
-      --reporter-htmlextra-export newman-report.html
-  shell: bash
+      - name: Run API Tests
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: |
+          newman run postman/WhatsAppOSINTCollection.json \
+            -e postman/WhatsAppOSINTEnv.json \
+            --env-var "apiKey=${RAPIDAPI_KEY}" \
+            -r htmlextra \
+            --reporter-htmlextra-export newman-report.html
+        shell: bash
 
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
