@@ -400,13 +400,12 @@
 			"value": "13022612667"
 		},
 		{
-			"key": "apiKey",
-			"value": "8180de05afmshfab5c0e43574221p180861jsnac5e3d592f50"
+			"key": "phone1",
+			"value": "34600000016"
 		},
 		{
-			"key": "phone1",
-			"value": "34600000016",
-			"type": "string"
+			"key": "apiKey",
+			"value": "8180de05afmshfab5c0e43574221p180861jsnac5e3d592f50"
 		}
 	]
 }
