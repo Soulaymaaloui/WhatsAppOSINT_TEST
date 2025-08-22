@@ -1,0 +1,412 @@
+{
+	"info": {
+		"_postman_id": "86a90e1f-b062-4e8c-9083-360a61841d2e",
+		"name": "WhatsAppOSINTCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29967903"
+	},
+	"item": [
+		{
+			"name": "GET Devices",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response has devices array\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(jsonData[0]).to.have.property('deviceId');\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/devices?phone={{phone}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"devices"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "{{phone}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Privacy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response has privacy data\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('phone');\r",
+							"    const expectedPhone = pm.environment.get(\"phone\");\r",
+							"    console.log(\"Environment phone value:\", expectedPhone); \r",
+							"    if (expectedPhone) {\r",
+							"        pm.expect(jsonData.phone).to.equal(expectedPhone);\r",
+							"    } else {\r",
+							"        pm.expect(jsonData.phone).to.equal(\"13022612667\");\r",
+							"    }\r",
+							"    pm.expect(Object.keys(jsonData).length).to.be.at.least(2);\r",
+							"    const additionalProperty = Object.keys(jsonData).find(key => key !== 'phone');\r",
+							"    pm.expect(jsonData[additionalProperty]).to.be.a('string');\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/privacy?phone={{phone}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"privacy"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "{{phone}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Fetch osint info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response has dck data\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"    pm.expect(jsonData).to.have.property('Registered');\r",
+							"    pm.expect(jsonData.Registered).to.be.oneOf(['Yes', 'No']); \r",
+							"    pm.expect(Object.keys(jsonData).length).to.be.at.least(2);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/wspic/dck?phone={{phone}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"wspic",
+						"dck"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "{{phone}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Base64 encoded profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response is valid base64 data\", () => {\r",
+							"    const responseBody = pm.response.text(); \r",
+							"    pm.expect(responseBody).to.be.a('string');\r",
+							"    pm.expect(responseBody).to.match(/^[A-Za-z0-9+/]+={0,2}$/); \r",
+							"    pm.expect(responseBody).to.include('/9j/');\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1500ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/wspic/b64?phone={{phone}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"wspic",
+						"b64"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "{{phone}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET  Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response has about info\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('about');\r",
+							"    pm.expect(jsonData.about).to.be.a('string');\r",
+							"    pm.expect(jsonData.about).to.equal('Estamos disponibles'); \r",
+							"});\r",
+							"pm.test(\"Response time is less than 1500ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/about?phone={{phone1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"about"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "{{phone1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST  Business insights",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Response has query in array\", () => {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(jsonData[0]).to.have.property('query');\r",
+							"    const expectedPhone = pm.environment.get(\"phone\");\r",
+							"    console.log(\"Environment phone value:\", expectedPhone); \r",
+							"    if (expectedPhone) {\r",
+							"        pm.expect(jsonData[0].query).to.equal(expectedPhone);\r",
+							"    } else {\r",
+							"        pm.expect(jsonData[0].query).to.equal(\"13022612667\"); \r",
+							"    }\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1000ms\", () => {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-rapidapi-key",
+						"value": "{{apiKey}}",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-host",
+						"value": "whatsapp-osint.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"phone\": \"{{phone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/bizos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"bizos"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://whatsapp-osint.p.rapidapi.com"
+		},
+		{
+			"key": "phone",
+			"value": "13022612667"
+		},
+		{
+			"key": "apiKey",
+			"value": "29ffdda5f9msh52b3f76e3991ec7p1e80bfjsn714e8fff3c80"
+		},
+		{
+			"key": "phone1",
+			"value": "34600000016",
+			"type": "string"
+		}
+	]
+}
